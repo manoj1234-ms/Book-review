@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 // const auth = require('../middleware/auth');
 const bookController = require('../Controllers/bookcontroller');
-const authMiddleware = require('../middleware/auth');
+const { authUser } = require('../middleware/auth');
 
 //Add a new book
-router.post('/add',authMiddleware, bookController.createBook);
+router.post('/add', authUser, bookController.createBook);
 
 //Get all books with pagination and filtering
 router.get('/', bookController.listBooks);
@@ -14,9 +14,9 @@ router.get('/', bookController.listBooks);
 router.get('/:id', bookController.getBookDetails);
 
 //Update a book by ID
-router.put('/:id', authMiddleware, bookController.updateBook);
+router.put('/:id', authUser, bookController.updateBook);
 
 //Delete a book by ID
-router.delete('/:id', authMiddleware, bookController.deleteBook);
+router.delete('/:id', authUser, bookController.deleteBook);
 
 module.exports = router;

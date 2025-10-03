@@ -1,5 +1,5 @@
 const Review = require('../models/Review');
-const Book = require('../models/Book');
+const Book = require('../models/books');
 const mongoose = require('mongoose');
 
 const addOrUpdateReview = async (req, res) => {
