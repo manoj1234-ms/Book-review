@@ -25,6 +25,10 @@ router.post(
 
 router.get('/profile', authUser, userController.getUserProfile);
 
+router.put('/profile', authUser, userController.updateUserProfile);
+
+router.post('/profile/image', authUser, userController.uploadProfileImage);
+
 router.get('/logout', authUser, userController.logoutUser);
 
 module.exports = router;

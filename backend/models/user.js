@@ -6,7 +6,10 @@ const userSchema = new mongoose.Schema({
   firstname: { type: String, required: true, trim: true },
   lastname: { type: String, required: true, trim: true },
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-  password: { type: String, required: true, select: false }
+  password: { type: String, required: true, select: false },
+  gender: { type: String, trim: true },
+  bio: { type: String, trim: true },
+  profileImage: { type: String, default: '' }
 }, { timestamps: true });
 
 // Pre-save hook to hash password

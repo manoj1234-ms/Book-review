@@ -6,12 +6,19 @@ const mongoose = require('mongoose');
 const createBook = async (req, res) => {
   try {
     const { title, author, description, genre, year } = req.body;
+    let imagePath = null;
+
+    if (req.file) {
+      imagePath = req.file.path; // Assuming multer middleware is used and saves file path in req.file.path
+    }
+
     const book = await Book.create({
       title,
       author,
       description,
       genre,
       year,
+      image: imagePath,
       addedBy: req.user._id
     });
 
@@ -29,7 +36,7 @@ const createBook = async (req, res) => {
 const listBooks = async (req, res) => {
   try {
     const page = Math.max(1, parseInt(req.query.page)) || 1;
-    const limit = 5;
+    const limit = 50;
     const skip = (page - 1) * limit;
 
     const filter = {};

@@ -3,17 +3,20 @@ const express = require('express');
 const connectDB = require('./Config/db')
 const dotenv = require('dotenv');
 const cors = require('cors');
-
+const user = require('./Routes/user.routes')
+const book = require('./Routes/book.routes')
+const review = require('./Routes/reviewroutes')
 const app = express();
 dotenv.config();
 connectDB();
 
 app.use(cors());
 app.use(express.json()); // Enable JSON body parsing
+app.use('/uploads', express.static('uploads')); // Serve static files from uploads folder
 
-app.use('/api/auth', require('./Routes/user.routes'));
-app.use('/api/books', require('./Routes/book.routes'));
-app.use('/api', require('./Routes/reviewroutes'))
+app.use('/api/auth', user);
+app.use('/api/books', book);
+app.use('/api', review)
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
