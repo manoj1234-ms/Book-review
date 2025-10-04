@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "frontend": "vite",
+    "backend": "cd ../backend && npm run start",
+    "start": "concurrently -n \"BACKEND,FRONTEND\" -c \"bgBlue.bold,green.bold\" \"npm run backend\" \"npm run frontend\"",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -13,6 +15,7 @@
     "@tailwindcss/vite": "^4.1.14",
     "axios": "^1.12.2",
     "bootstrap": "^5.3.8",
+    "concurrently": "^9.2.1",
     "lucide-react": "^0.544.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
