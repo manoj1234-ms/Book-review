@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext.jsx";
+import ThemeToggle from "../components/ThemeToggle.jsx";
 
 function Profile() {
   const { token, logout } = useContext(AuthContext);
@@ -289,6 +290,8 @@ function Profile() {
           </div>
           <span>›</span>
         </div>
+
+        <ThemeToggle />
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #eee' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
