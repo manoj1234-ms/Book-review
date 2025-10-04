@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext.jsx";
-import ThemeToggle from "../components/ThemeToggle.jsx";
 
 function Profile() {
   const { token, logout } = useContext(AuthContext);
@@ -21,6 +20,7 @@ function Profile() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  const [purchaseLimit, setPurchaseLimit] = useState(10);
 
   useEffect(() => {
     if (token) {
@@ -42,6 +42,7 @@ function Profile() {
           setGender(json.gender || "");
           setBio(json.bio || "");
           setProfileImage(json.profileImage || "");
+          setPurchaseLimit(json.purchaseLimit || 10);
         })
         .catch((err) => console.error("Error fetching profile:", err));
     }
@@ -162,54 +163,32 @@ function Profile() {
 
   // My Profile View
   const renderProfileView = () => (
-    <div style={{ backgroundColor: '#ffb3ba', minHeight: '100vh', padding: '20px' }}>
+    <div className="bg-pink-200 dark:bg-gray-800 min-h-screen p-5">
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+      <div className="flex justify-between items-center mb-5">
         <button 
           onClick={() => navigate('/')}
-          style={{ background: 'none', border: 'none', fontSize: '18px' }}
+          className="bg-none border-none text-lg"
         >
           ←
         </button>
-        <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 'bold' }}>My Profile</h2>
-        <button style={{ background: 'none', border: 'none', fontSize: '18px' }}>⚙️</button>
+        <h2 className="m-0 text-lg font-bold text-gray-900 dark:text-gray-100">My Profile</h2>
+        <button className="bg-none border-none text-lg">⚙️</button>
       </div>
 
       {/* Profile Card */}
-      <div style={{ 
-        backgroundColor: 'white', 
-        borderRadius: '15px', 
-        padding: '30px', 
-        marginBottom: '20px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-      }}>
+      <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 mb-5 shadow-md">
         {/* Profile Picture */}
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <div style={{ position: 'relative', display: 'inline-block' }}>
+        <div className="text-center mb-5">
+          <div className="relative inline-block">
             <img
               src={profileImage ? `http://localhost:5000${profileImage}` : "/assets/avatar.png"}
               alt="Profile"
-              style={{
-                width: '100px',
-                height: '100px',
-                borderRadius: '50%',
-                objectFit: 'cover'
-              }}
+              className="w-24 h-24 rounded-full object-cover"
             />
             <button 
               onClick={() => document.getElementById('profileImageInput').click()}
-              style={{
-                position: 'absolute',
-                bottom: '5px',
-                right: '5px',
-                background: '#007bff',
-                color: 'white',
-                border: 'none',
-                borderRadius: '50%',
-                width: '30px',
-                height: '30px',
-                fontSize: '12px'
-              }}
+              className="absolute bottom-1 right-1 bg-blue-600 text-white border-none rounded-full w-7 h-7 text-xs"
             >
               📷
             </button>
@@ -218,116 +197,100 @@ function Profile() {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              style={{ display: 'none' }}
+              className="hidden"
             />
           </div>
-          <h3 style={{ margin: '10px 0 5px 0', fontSize: '20px' }}>{firstname} {lastname}</h3>
-          <p style={{ margin: 0, color: '#666' }}>{email}</p>
+          <h3 className="my-2 text-xl text-gray-900 dark:text-gray-100">{username}</h3>
+          <p className="m-0 text-gray-600 dark:text-gray-300">{email}</p>
+          <p className="m-0 text-gray-600 dark:text-gray-300">Books you can buy: {purchaseLimit}</p>
         </div>
 
         {/* Edit Profile Button */}
         <button
           onClick={() => setCurrentView('edit')}
-          style={{
-            width: '100%',
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            padding: '12px',
-            fontSize: '16px',
-            fontWeight: '500',
-            marginBottom: '20px'
-          }}
+          className="w-full bg-blue-600 text-white rounded-lg py-3 text-lg font-medium mb-5"
         >
           Edit Profile
         </button>
       </div>
 
       {/* Menu Options */}
-      <div style={{ 
-        backgroundColor: 'white', 
-        borderRadius: '15px', 
-        padding: '20px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #eee' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '15px', fontSize: '20px' }}>❤️</span>
-            <span>Favourites</span>
+      <div className="bg-white dark:bg-gray-900 rounded-2xl p-5 shadow-md">
+        <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <span className="mr-4 text-2xl">❤️</span>
+            <span className="text-gray-900 dark:text-gray-100">Favourites</span>
           </div>
-          <span>›</span>
+          <span className="text-gray-900 dark:text-gray-100">›</span>
         </div>
         
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #eee' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '15px', fontSize: '20px' }}>⬇️</span>
-            <span>Downloads</span>
+        <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <span className="mr-4 text-2xl">⬇️</span>
+            <span className="text-gray-900 dark:text-gray-100">Downloads</span>
           </div>
-          <span>›</span>
+          <span className="text-gray-900 dark:text-gray-100">›</span>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #eee' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '15px', fontSize: '20px' }}>🌐</span>
-            <span>Languages</span>
+        <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <span className="mr-4 text-2xl">🌐</span>
+            <span className="text-gray-900 dark:text-gray-100">Languages</span>
           </div>
-          <span>›</span>
+          <span className="text-gray-900 dark:text-gray-100">›</span>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #eee' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '15px', fontSize: '20px' }}>📍</span>
-            <span>Location</span>
+        <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <span className="mr-4 text-2xl">📍</span>
+            <span className="text-gray-900 dark:text-gray-100">Location</span>
           </div>
-          <span>›</span>
+          <span className="text-gray-900 dark:text-gray-100">›</span>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #eee' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '15px', fontSize: '20px' }}>▶️</span>
-            <span>Subscription</span>
+        <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <span className="mr-4 text-2xl">▶️</span>
+            <span className="text-gray-900 dark:text-gray-100">Subscription</span>
           </div>
-          <span>›</span>
+          <span className="text-gray-900 dark:text-gray-100">›</span>
         </div>
 
-        <ThemeToggle />
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #eee' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '15px', fontSize: '20px' }}>🖥️</span>
-            <span>Display</span>
+        <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <span className="mr-4 text-2xl">🖥️</span>
+            <span className="text-gray-900 dark:text-gray-100">Display</span>
           </div>
-          <span>›</span>
+          <span className="text-gray-900 dark:text-gray-100">›</span>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #eee' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '15px', fontSize: '20px' }}>🗑️</span>
-            <span>Clear Cache</span>
+        <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <span className="mr-4 text-2xl">🗑️</span>
+            <span className="text-gray-900 dark:text-gray-100">Clear Cache</span>
           </div>
-          <span>›</span>
+          <span className="text-gray-900 dark:text-gray-100">›</span>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #eee' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '15px', fontSize: '20px' }}>🕐</span>
-            <span>Clear History</span>
+        <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <span className="mr-4 text-2xl">🕐</span>
+            <span className="text-gray-900 dark:text-gray-100">Clear History</span>
           </div>
-          <span>›</span>
+          <span className="text-gray-900 dark:text-gray-100">›</span>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '15px', fontSize: '20px' }}>↩️</span>
-            <span onClick={handleLogout} style={{ cursor: 'pointer', color: '#dc3545' }}>Log Out</span>
+        <div className="flex justify-between items-center py-4">
+          <div className="flex items-center">
+            <span className="mr-4 text-2xl">↩️</span>
+            <span onClick={handleLogout} className="cursor-pointer text-red-600 dark:text-red-400">Log Out</span>
           </div>
-          <span>›</span>
+          <span className="text-gray-900 dark:text-gray-100">›</span>
         </div>
       </div>
 
       {/* App Version */}
-      <div style={{ textAlign: 'center', marginTop: '20px', color: '#666' }}>
+      <div className="text-center mt-5 text-gray-600 dark:text-gray-400">
         App Version 2.3
       </div>
     </div>
@@ -335,56 +298,32 @@ function Profile() {
 
   // Edit Profile View
   const renderEditView = () => (
-    <div style={{ backgroundColor: '#ffb3ba', minHeight: '100vh', padding: '20px' }}>
+    <div className="bg-pink-200 dark:bg-gray-800 min-h-screen p-5">
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+      <div className="flex justify-between items-center mb-5">
         <button 
           onClick={() => setCurrentView('profile')}
-          style={{ background: 'none', border: 'none', fontSize: '18px' }}
+          className="bg-none border-none text-lg"
         >
           ←
         </button>
-        <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 'bold' }}>Edit Profile</h2>
+        <h2 className="m-0 text-lg font-bold text-gray-900 dark:text-gray-100">Edit Profile</h2>
         <div></div>
       </div>
 
       {/* Edit Profile Card */}
-      <div style={{ 
-        backgroundColor: 'white', 
-        borderRadius: '15px', 
-        padding: '30px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-      }}>
+      <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-md">
         {/* Profile Picture with Edit Icon */}
-        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-          <div style={{ position: 'relative', display: 'inline-block' }}>
+        <div className="text-center mb-7">
+          <div className="relative inline-block">
             <img
               src={profileImage ? `http://localhost:5000${profileImage}` : "/assets/avatar.png"}
               alt="Profile"
-              style={{
-                width: '100px',
-                height: '100px',
-                borderRadius: '50%',
-                objectFit: 'cover'
-              }}
+              className="w-24 h-24 rounded-full object-cover"
             />
             <button 
               onClick={() => document.getElementById('editProfileImageInput').click()}
-              style={{
-                position: 'absolute',
-                bottom: '0px',
-                right: '0px',
-                background: '#007bff',
-                color: 'white',
-                border: 'none',
-                borderRadius: '50%',
-                width: '35px',
-                height: '35px',
-                fontSize: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
+              className="absolute bottom-0 right-0 bg-blue-600 text-white border-none rounded-full w-9 h-9 text-sm flex items-center justify-center"
             >
               ✏️
             </button>
@@ -393,140 +332,85 @@ function Profile() {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              style={{ display: 'none' }}
+              className="hidden"
             />
           </div>
         </div>
 
         {/* Form Fields */}
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>First Name</label>
+        <div className="mb-5">
+          <label className="block mb-1 font-medium text-gray-900 dark:text-gray-100">First Name</label>
           <input
             type="text"
             value={firstname}
             onChange={handleFirstnameChange}
-            style={{
-              width: '100%',
-              padding: '12px',
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              fontSize: '16px',
-              boxSizing: 'border-box'
-            }}
+            className="w-full p-3 border border-gray-300 rounded-lg text-lg box-border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
           />
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Last Name</label>
+        <div className="mb-5">
+          <label className="block mb-1 font-medium text-gray-900 dark:text-gray-100">Last Name</label>
           <input
             type="text"
             value={lastname}
             onChange={handleLastnameChange}
-            style={{
-              width: '100%',
-              padding: '12px',
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              fontSize: '16px',
-              boxSizing: 'border-box'
-            }}
+            className="w-full p-3 border border-gray-300 rounded-lg text-lg box-border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
           />
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Username</label>
+        <div className="mb-5">
+          <label className="block mb-1 font-medium text-gray-900 dark:text-gray-100">Username</label>
           <input
             type="text"
             value={username}
             onChange={handleUsernameChange}
-            style={{
-              width: '100%',
-              padding: '12px',
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              fontSize: '16px',
-              boxSizing: 'border-box'
-            }}
+            className="w-full p-3 border border-gray-300 rounded-lg text-lg box-border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
           />
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Email</label>
+        <div className="mb-5">
+          <label className="block mb-1 font-medium text-gray-900 dark:text-gray-100">Email</label>
           <input
             type="email"
             value={email}
             onChange={handleEmailChange}
-            style={{
-              width: '100%',
-              padding: '12px',
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              fontSize: '16px',
-              boxSizing: 'border-box'
-            }}
+            className="w-full p-3 border border-gray-300 rounded-lg text-lg box-border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
           />
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Phone Number</label>
-          <div style={{ display: 'flex' }}>
-            <select style={{
-              padding: '12px',
-              border: '1px solid #ddd',
-              borderRadius: '8px 0 0 8px',
-              fontSize: '16px',
-              backgroundColor: '#f8f9fa'
-            }}>
+        <div className="mb-5">
+          <label className="block mb-1 font-medium text-gray-900 dark:text-gray-100">Phone Number</label>
+          <div className="flex">
+            <select className="p-3 border border-gray-300 rounded-l-lg text-lg bg-gray-100 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-100">
               <option>+234</option>
-              <option>+1</option>
+              <option>+91</option>
               <option>+44</option>
             </select>
             <input
               type="tel"
               value={phoneNumber}
               onChange={handlePhoneChange}
-              style={{
-                flex: 1,
-                padding: '12px',
-                border: '1px solid #ddd',
-                borderLeft: 'none',
-                borderRadius: '0 8px 8px 0',
-                fontSize: '16px'
-              }}
+              className="flex-1 p-3 border border-gray-300 border-l-0 rounded-r-lg text-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
             />
           </div>
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Birth</label>
+        <div className="mb-7">
+          <label className="block mb-1 font-medium text-gray-900 dark:text-gray-100">Birth</label>
           <input
             type="date"
             value={birthDate}
             onChange={handleBirthDateChange}
-            style={{
-              width: '100%',
-              padding: '12px',
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              fontSize: '16px',
-              boxSizing: 'border-box'
-            }}
+            className="w-full p-3 border border-gray-300 rounded-lg text-lg box-border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
           />
         </div>
 
-        <div style={{ marginBottom: '30px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Gender</label>
+        <div className="mb-7">
+          <label className="block mb-1 font-medium text-gray-900 dark:text-gray-100">Gender</label>
           <select
             value={gender}
             onChange={handleGenderChange}
-            style={{
-              width: '100%',
-              padding: '12px',
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              fontSize: '16px',
-              boxSizing: 'border-box'
-            }}
+            className="w-full p-3 border border-gray-300 rounded-lg text-lg box-border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
           >
             <option value="">Select Gender</option>
             <option value="Male">Male</option>
@@ -538,21 +422,7 @@ function Profile() {
         {/* Change Password Button */}
         <button
           onClick={handleChangePassword}
-          style={{
-            width: '100%',
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            padding: '12px',
-            fontSize: '16px',
-            fontWeight: '500',
-            marginBottom: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px'
-          }}
+          className="w-full bg-blue-600 text-white rounded-lg py-3 text-lg font-medium mb-5 flex items-center justify-center gap-2"
         >
           🔒 Change Password
         </button>
@@ -562,18 +432,7 @@ function Profile() {
           type="button"
           disabled={!inputChanged}
           onClick={saveProfile}
-          style={{
-            width: '100%',
-            backgroundColor: inputChanged ? '#007bff' : '#6c757d',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            padding: '12px',
-            fontSize: '16px',
-            fontWeight: '500',
-            cursor: inputChanged ? 'pointer' : 'not-allowed',
-            transition: 'all 0.2s ease-in-out'
-          }}
+          className={`w-full rounded-lg py-3 text-lg font-medium transition-all ease-in-out ${inputChanged ? 'bg-blue-600 text-white cursor-pointer' : 'bg-gray-500 text-gray-300 cursor-not-allowed'}`}
         >
           Save Changes
         </button>

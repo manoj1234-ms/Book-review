@@ -38,6 +38,8 @@ export const fetchBookById = (id) => API.get(`/books/${id}`);
 export const createBook = (bookData) => API.post('/books', bookData);
 // Sends a PUT request to update an existing book
 export const updateBook = (id, bookData) => API.put(`/books/${id}`, bookData);
+// Sends a PUT request to update purchase link for a book
+export const updatePurchaseLink = (id, purchaseLink) => API.put(`/books/${id}/purchase-link`, { purchaseLink });
 // Sends a DELETE request to remove a book
 export const deleteBook = (id) => API.delete(`/books/${id}`);
 

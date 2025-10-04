@@ -1,9 +1,29 @@
-/* @import "tailwindcss"; */
+@reference "tailwindcss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* small helper */
+/* Light mode */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --primary-color: #1a73e8;
+}
+
+/* Dark mode */
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --primary-color: #bb86fc;
+}
+
+/* Use variables in your styles */
 body {
-  @apply bg-gray-100 text-black dark:bg-gray-900 dark:text-white;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
 }

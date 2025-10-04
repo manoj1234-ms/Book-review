@@ -122,7 +122,13 @@ const BookDetailsPage = () => {
               alert('Book already in cart');
             }
           }}>Add to Cart</button>
-          <button className="btn btn-primary" onClick={() => window.location.href = '/orders'}>Buy</button>
+          <button className="btn btn-primary" onClick={() => {
+            if (book.purchaseLink) {
+              window.location.href = book.purchaseLink;
+            } else {
+              navigate(`/books/${id}/insert-link`);
+            }
+          }}>Buy</button>
         </div>
 
         <hr />

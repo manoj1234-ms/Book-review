@@ -1,22 +1,16 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext.jsx";
+import DarkModeToggle from "./DarkModeToggle.jsx";
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
-  const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     await logout();
     navigate("/login");
   };
-
-  const toggleDarkMode = () => setDarkMode(!darkMode);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", darkMode);
-  }, [darkMode]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
@@ -52,16 +46,13 @@ const Navbar = () => {
 
         {/* Right side */}
         <div className="d-flex align-items-center">
-          <button onClick={toggleDarkMode} className="btn btn-secondary me-3">
-            {darkMode ? 'Light Mode' : 'Dark Mode'}
-          </button>
-
+          <DarkModeToggle />
           {isAuthenticated ? (
-            <button onClick={handleLogout} className="btn btn-outline-danger">
+            <button onClick={handleLogout} className="btn btn-outline-danger ms-2">
               Logout
             </button>
           ) : (
-            <Link to="/login" className="btn btn-outline-success me-2">
+            <Link to="/login" className="btn btn-outline-success ms-2">
               Login
             </Link>
           )}

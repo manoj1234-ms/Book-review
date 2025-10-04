@@ -107,13 +107,16 @@ module.exports.getUserProfile = async (req, res, next) => {
 // Update Profile
 module.exports.updateUserProfile = async (req, res, next) => {
   try {
-    const { firstname, lastname, email, gender, bio, profileImage } = req.body;
+    const { firstname, lastname, username, email, phoneNumber, birthDate, gender, bio, profileImage } = req.body;
     const userId = req.user._id;
 
     const updateData = {};
     if (firstname !== undefined) updateData.firstname = firstname;
     if (lastname !== undefined) updateData.lastname = lastname;
+    if (username !== undefined) updateData.username = username;
     if (email !== undefined) updateData.email = email;
+    if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
+    if (birthDate !== undefined) updateData.birthDate = new Date(birthDate);
     if (gender !== undefined) updateData.gender = gender;
     if (bio !== undefined) updateData.bio = bio;
     if (profileImage !== undefined) updateData.profileImage = profileImage;

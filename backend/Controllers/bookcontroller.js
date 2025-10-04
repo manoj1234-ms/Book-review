@@ -137,6 +137,31 @@ const updateBook = async (req, res) => {
   }
 };
 
+// Update Purchase Link
+const updatePurchaseLink = async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const { purchaseLink } = req.body;
+    const book = await Book.findById(bookId);
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    if (book.addedBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "You are not authorized to update this book" });
+    }
+
+    book.purchaseLink = purchaseLink;
+    await book.save();
+
+    res.json({ message: "Purchase link updated successfully", book });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 // Delete Book
 const deleteBook = async (req, res) => {
   try {
@@ -161,4 +186,4 @@ const deleteBook = async (req, res) => {
   }
 };
 
-module.exports = { createBook, listBooks, getBookDetails, updateBook, deleteBook };
+module.exports = { createBook, listBooks, getBookDetails, updateBook, updatePurchaseLink, deleteBook };

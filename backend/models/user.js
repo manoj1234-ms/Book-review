@@ -5,11 +5,15 @@ const jwt = require('jsonwebtoken');
 const userSchema = new mongoose.Schema({
   firstname: { type: String, required: true, trim: true },
   lastname: { type: String, required: true, trim: true },
+  username: { type: String, trim: true },
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true, select: false },
+  phoneNumber: { type: String, trim: true },
+  birthDate: { type: Date },
   gender: { type: String, trim: true },
   bio: { type: String, trim: true },
-  profileImage: { type: String, default: '' }
+  profileImage: { type: String, default: '' },
+  purchaseLimit: { type: Number, default: 10 }
 }, { timestamps: true });
 
 // Pre-save hook to hash password

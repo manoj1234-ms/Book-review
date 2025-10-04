@@ -29,6 +29,9 @@ router.get('/:id', bookController.getBookDetails);
 //Update a book by ID
 router.put('/:id', authUser, bookController.updateBook);
 
+//Update purchase link for a book
+router.put('/:id/purchase-link', authUser, bookController.updatePurchaseLink);
+
 //Delete a book by ID
 router.delete('/:id', authUser, bookController.deleteBook);
 

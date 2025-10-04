@@ -1,5 +1,0 @@
-- [x] Add profileImage field to backend/models/user.js
-- [x] Update backend/Controllers/user.controller.js to handle profileImage in updateUserProfile and add upload functionality
-- [x] Update frontend/src/pages/Profile.jsx to add profileImage state, fetch, display image conditionally, and add file upload input
-- [x] Add multer configuration and static file serving in backend
-- [x] Test the profile page

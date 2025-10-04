@@ -8,17 +8,17 @@ const ThemeToggle = () => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
       setDarkMode(true);
-      document.documentElement.classList.add("dark");
+      document.documentElement.setAttribute("data-theme", "dark");
     }
   }, []);
 
   // Toggle dark mode
   const toggleDarkMode = () => {
     if (darkMode) {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.removeAttribute("data-theme");
       localStorage.setItem("theme", "light");
     } else {
-      document.documentElement.classList.add("dark");
+      document.documentElement.setAttribute("data-theme", "dark");
       localStorage.setItem("theme", "dark");
     }
     setDarkMode(!darkMode);

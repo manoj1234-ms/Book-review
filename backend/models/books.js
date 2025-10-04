@@ -8,7 +8,8 @@ const bookSchema = new mongoose.Schema({
   year: { type: Number },
   addedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   averageRating: { type: Number, default: 0 },
-  reviewsCount: { type: Number, default: 0 }
+  reviewsCount: { type: Number, default: 0 },
+  purchaseLink: { type: String }
 }, { timestamps: true });
 
 module.exports = mongoose.model('books', bookSchema);
