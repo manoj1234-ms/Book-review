@@ -116,7 +116,7 @@ const SignupPage = () => {
       console.log('Submitting signup data:', formData);
 
       const response = await registerUser(formData);
-      console.log('Signup response:', response);
+      // console.log('Signup response:', response);
 
       login(response.data.token); // store token in context
       navigate('/'); // redirect to home
