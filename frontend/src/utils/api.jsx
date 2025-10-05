@@ -21,36 +21,30 @@ export const loginUser = (formData) => API.post('/api/auth/login', formData);
 // Sends a POST request to register a new user
 export const registerUser = (formData) => API.post('/api/auth/signup', formData);
 // Sends a GET request to log out a user
-export const logoutUser = () => API.get('/auth/logout');
+export const logoutUser = () => API.get('/api/auth/logout');
 
 // === BOOK ROUTES ===
 // Fetches a paginated list of books
 export const fetchBooks = (page, searchQuery = '') => {
-  let url = `/books?page=${page}`;
+  let url = `/api/books?page=${page}`;
   if (searchQuery.trim()) {
     url += `&search=${encodeURIComponent(searchQuery.trim())}`;
   }
   return API.get(url);
 };
 // Fetches a single book by its ID
-export const fetchBookById = (id) => API.get(`/books/${id}`);
+export const fetchBookById = (id) => API.get(`/api/books/${id}`);
 // Sends a POST request to add a new book
-export const createBook = (bookData) => API.post('/books', bookData);
+export const createBook = (bookData) => API.post('/api/books/add-book', bookData);
 // Sends a PUT request to update an existing book
-export const updateBook = (id, bookData) => API.put(`/books/${id}`, bookData);
+export const updateBook = (id, bookData) => API.put(`/api/books/${id}`, bookData);
 // Sends a PUT request to update purchase link for a book
-export const updatePurchaseLink = (id, purchaseLink) => API.put(`/books/${id}/purchase-link`, { purchaseLink });
+export const updatePurchaseLink = (id, purchaseLink) => API.put(`/api/books/${id}/purchase-link`, { purchaseLink });
 // Sends a DELETE request to remove a book
-export const deleteBook = (id) => API.delete(`/books/${id}`);
+export const deleteBook = (id) => API.delete(`/api/books/${id}`);
 
 // === REVIEW ROUTES ===
-// Fetches all reviews for a specific book
-export const fetchReviewsForBook = (bookId) => API.get(`/reviews/book/${bookId}`);
-// Fetches a single review by its ID
-export const fetchReviewById = (id) => API.get(`/reviews/${id}`);
-// Sends a POST request to add a new review for a book
-export const addReview = (bookId, reviewData) => API.post(`/reviews/${bookId}`, reviewData);
-// Sends a PUT request to update an existing review
-export const updateReview = (id, reviewData) => API.put(`/reviews/${id}`, reviewData);
+// Sends a POST request to add or update a review for a book
+export const addReview = (bookId, reviewData) => API.post(`/api/${bookId}/review`, reviewData);
 // Sends a DELETE request to remove a review
-export const deleteReview = (reviewId) => API.delete(`/reviews/${reviewId}`);
+export const deleteReview = (bookId, reviewId) => API.delete(`/api/${bookId}/review/${reviewId}`);

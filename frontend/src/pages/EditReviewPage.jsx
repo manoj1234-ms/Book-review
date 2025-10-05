@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchReviewById, updateReview } from '../utils/api.jsx';
+
 import Loading from '../components/Loading.jsx';
 
 const EditReviewPage = () => {
@@ -14,25 +14,10 @@ const EditReviewPage = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
+  // No review fetch API available; consider passing review data via props or location state if needed.
   useEffect(() => {
-    const getReview = async () => {
-      try {
-        const response = await fetchReviewById(id);
-        const review = response.data;
-        setFormData({
-          rating: review.rating || 5,
-          text: review.text || ''
-        });
-      } catch (err) {
-        setError('Failed to load review details.');
-        console.error('Error fetching review:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getReview();
-  }, [id]);
+    setLoading(false);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -46,15 +31,9 @@ const EditReviewPage = () => {
     setSaving(true);
     setError('');
 
-    try {
-      await updateReview(id, formData);
-      navigate(-1); // Go back to previous page
-    } catch (err) {
-      setError('Failed to update review. Please try again.');
-      console.error('Error updating review:', err);
-    } finally {
-      setSaving(false);
-    }
+    // No updateReview API available; implement review update logic here if backend route is added in future.
+    setSaving(false);
+    navigate(-1); // Go back to previous page
   };
 
   if (loading) return <Loading />;

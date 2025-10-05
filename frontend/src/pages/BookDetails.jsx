@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { fetchBookById, fetchReviewsForBook, addReview, deleteReview, deleteBook } from '../utils/api.jsx';
+import { fetchBookById, addReview, deleteReview, deleteBook } from '../utils/api.jsx';
 import Loading from '../components/Loading.jsx';
 
 const BookDetailsPage = () => {
@@ -31,8 +31,8 @@ const BookDetailsPage = () => {
         // Fetch both the book details and its reviews from the backend API
         const bookRes = await fetchBookById(id);
         setBook(bookRes.data);
-        const reviewsRes = await fetchReviewsForBook(id);
-        setReviews(reviewsRes.data);
+  // No fetchReviewsForBook API available; consider passing reviews with book details or add backend route if needed.
+  setReviews(bookRes.data.reviews || []);
       } catch (error) {
         console.error("Failed to fetch book details:", error);
         // Optional: Redirect to a 404 page if the book is not found
