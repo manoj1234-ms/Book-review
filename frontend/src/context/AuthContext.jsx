@@ -47,6 +47,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await logoutUser(); // Call backend logout to clear cookie
     } catch (error) {
+      alert('Logout failed on server, but you have been logged out locally.');
       console.error('Error logging out:', error);
     } finally {
       localStorage.removeItem('token');
