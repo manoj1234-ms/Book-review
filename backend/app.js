@@ -16,13 +16,13 @@ const app = express();
 
 // ✅ CORS Configuration
 const allowedOrigins = [
-  "http://localhost:5173", // Local frontend for dev
-  process.env.FRONTEND_URL   // Deployed frontend
+  "http://localhost:5173", // local frontend for dev
+  process.env.FRONTEND_URL   // deployed frontend
 ];
 
 app.use(cors({
   origin: function(origin, callback) {
-    // allow requests with no origin (like curl or mobile apps)
+    // allow requests with no origin (curl, mobile apps)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -35,11 +35,11 @@ app.use(cors({
 }));
 
 // ✅ Handle preflight requests for all routes
-app.options("*", cors());
+app.options(/.*/, cors()); // FIXED: wildcard regex instead of "*"
 
 // ✅ Middleware
-app.use(express.json()); // Parse JSON bodies
-app.use('/uploads', express.static('uploads')); // Serve uploaded files
+app.use(express.json()); // parse JSON bodies
+app.use('/uploads', express.static('uploads')); // serve uploaded files
 
 // ✅ Routes
 app.use('/api/auth', user);
