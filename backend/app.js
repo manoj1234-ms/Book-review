@@ -6,11 +6,16 @@ const cors = require('cors');
 const user = require('./Routes/user.routes')
 const book = require('./Routes/book.routes')
 const review = require('./Routes/reviewroutes')
+
 const app = express();
 dotenv.config();
 connectDB();
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}));
+
 app.use(express.json()); // Enable JSON body parsing
 app.use('/uploads', express.static('uploads')); // Serve static files from uploads folder
 

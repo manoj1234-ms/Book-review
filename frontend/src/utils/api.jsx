@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // All API requests will go to this base URL
 // Make sure this matches the port your backend is running on
-const API = axios.create({ baseURL: 'http://localhost:5000/api' });
+const API = axios.create({ baseURL: `${import.meta.env.VITE_REACT_APP_BACKEND_URL}` });
 
 // This function acts as a "middleware" for your frontend requests.
 // Before any request is sent, it checks for a token in localStorage.

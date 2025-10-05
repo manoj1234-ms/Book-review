@@ -37,7 +37,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div>
             <h3 className="text-xl font-bold mb-4 bg-gradient-accent bg-clip-text text-transparent">
-              Praveen Gupta
+              Manoj Sharma
             </h3>
             <p className="text-background/70 leading-relaxed">
               AI & Full-Stack Developer passionate about creating innovative tech solutions. 
@@ -65,7 +65,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Connect</h4>
             <div className="space-y-2 mb-4">
-              <p className="text-background/70 text-sm">praveen.strange0@gmail.com</p>
+              <p className="text-background/70 text-sm">manoj.strange0@gmail.com</p>
               <p className="text-background/70 text-sm">+91 8924928266</p>
               <p className="text-background/70 text-sm">Haridwar, Uttarakhand</p>
             </div>
@@ -90,7 +90,7 @@ const Footer = () => {
         <div className="border-t border-background/20 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-background/70 text-sm">
-              © {currentYear} Praveen Gupta. All rights reserved.
+              © {currentYear} Manoj Sharma. All rights reserved.
             </p>
             <p className="text-background/70 text-sm flex items-center">
               Made with <Heart size={16} className="mx-1 text-accent" /> and lots of coffee

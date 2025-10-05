@@ -24,7 +24,7 @@ function Profile() {
 
   useEffect(() => {
     if (token) {
-      fetch("http://localhost:5000/api/auth/profile", {
+      fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/auth/profile`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +93,7 @@ function Profile() {
   };
 
   const saveProfile = () => {
-    fetch("http://localhost:5000/api/auth/profile", {
+    fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/auth/profile`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -125,7 +125,7 @@ function Profile() {
     const formData = new FormData();
     formData.append('profileImage', file);
 
-    fetch("http://localhost:5000/api/auth/profile/image", {
+    fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/auth/profile/image`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -182,10 +182,15 @@ function Profile() {
         <div className="text-center mb-5">
           <div className="relative inline-block">
             <img
-              src={profileImage ? `http://localhost:5000${profileImage}` : "/assets/avatar.png"}
-              alt="Profile"
-              className="w-24 h-24 rounded-full object-cover"
-            />
+             src={
+            profileImage
+              ? `${import.meta.env.VITE_BACKEND_URL}/${profileImage}`
+           : "/assets/avatar.png"
+            }
+                alt="Profile"
+  className="w-24 h-24 rounded-full object-cover"
+/>
+
             <button 
               onClick={() => document.getElementById('profileImageInput').click()}
               className="absolute bottom-1 right-1 bg-blue-600 text-white border-none rounded-full w-7 h-7 text-xs"
@@ -317,7 +322,12 @@ function Profile() {
         <div className="text-center mb-7">
           <div className="relative inline-block">
             <img
-              src={profileImage ? `http://localhost:5000${profileImage}` : "/assets/avatar.png"}
+              src={
+          profileImage
+          ? `${import.meta.env.VITE_BACKEND_URL}/${profileImage}`
+          : "/assets/avatar.png"
+       }
+
               alt="Profile"
               className="w-24 h-24 rounded-full object-cover"
             />
