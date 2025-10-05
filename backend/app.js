@@ -14,25 +14,31 @@ connectDB();
 
 const app = express();
 
-// ✅ CORS Configuration
-const allowedOrigins = [
-  "http://localhost:5173", // local frontend for dev
-  process.env.FRONTEND_URL   // deployed frontend
-];
+// // ✅ CORS Configuration
+// const allowedOrigins = [
+//   "http://localhost:5173",
+//   process.env.FRONTEND_URL // e.g. "https://book-review-frontend-omega.vercel.app"
+// ];
 
+// app.use(cors({
+//   origin: function(origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true
+// }));
+
+// CORS middleware
 app.use(cors({
-  origin: function(origin, callback) {
-    // allow requests with no origin (curl, mobile apps)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: ["http://localhost:5173", process.env.FRONTEND_URL],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 // ✅ Handle preflight requests for all routes
 app.options(/.*/, cors()); // FIXED: wildcard regex instead of "*"

@@ -17,9 +17,9 @@ API.interceptors.request.use((req) => {
 
 // === AUTHENTICATION ROUTES ===
 // Sends a POST request to log in a user
-export const loginUser = (formData) => API.post('/auth/login', formData);
+export const loginUser = (formData) => API.post('/api/auth/login', formData);
 // Sends a POST request to register a new user
-export const registerUser = (formData) => API.post('/auth/signup', formData);
+export const registerUser = (formData) => API.post('/api/auth/signup', formData);
 // Sends a GET request to log out a user
 export const logoutUser = () => API.get('/auth/logout');
 
