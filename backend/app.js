@@ -55,6 +55,10 @@ app.options(/.*/, cors()); // FIXED: wildcard regex instead of "*"
 app.use(express.json()); // parse JSON bodies
 app.use('/uploads', express.static('uploads')); // serve uploaded files
 
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
 // ✅ Routes
 app.use('/api/auth', user);
 app.use('/api/books', book);
